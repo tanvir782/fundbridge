@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+:root {
+  --color-ink: #12172b;
+  --color-ink-soft: #1b2140;
+  --color-paper: #f7f6f2;
+  --color-paper-dim: #ece9e1;
+  --color-amber: #e8a33d;
+  --color-amber-soft: #f3c583;
+  --color-teal: #2b6e68;
+  --color-teal-soft: #4a938c;
+  --color-slate: #6b7280;
+  --color-coral: #d6604f;
+  --color-ink-text: #1b1f2a;
+}
+
+@theme inline {
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-paper: var(--color-paper);
+  --color-paper-dim: var(--color-paper-dim);
+  --color-amber: var(--color-amber);
+  --color-amber-soft: var(--color-amber-soft);
+  --color-teal: var(--color-teal);
+  --color-teal-soft: var(--color-teal-soft);
+  --color-slate: var(--color-slate);
+  --color-coral: var(--color-coral);
+  --color-ink-text: var(--color-ink-text);
+  --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, monospace;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink-text);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-amber-soft);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
