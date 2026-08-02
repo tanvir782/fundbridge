@@ -1,23 +1,40 @@
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <main className="min-h-screen bg-ink text-paper flex flex-col">
       <header className="flex items-center justify-between px-6 py-5 md:px-12">
         <span className="font-display text-xl italic">FundBridge</span>
         <nav className="flex gap-3 text-sm font-mono">
-          <Link
-            href="/login"
-            className="px-4 py-2 rounded-md hover:bg-paper/10 transition-colors"
-          >
-            Log in
-          </Link>
-          <Link
-            href="/register"
-            className="px-4 py-2 rounded-md bg-amber text-ink font-medium hover:bg-amber-soft transition-colors"
-          >
-            Get started
-          </Link>
+          {user ? (
+            <Link
+              href="/dashboard"
+              className="px-4 py-2 rounded-md bg-amber text-ink font-medium hover:bg-amber-soft transition-colors"
+            >
+              Go to dashboard
+            </Link>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="px-4 py-2 rounded-md hover:bg-paper/10 transition-colors"
+              >
+                Log in
+              </Link>
+              <Link
+                href="/register"
+                className="px-4 py-2 rounded-md bg-amber text-ink font-medium hover:bg-amber-soft transition-colors"
+              >
+                Get started
+              </Link>
+            </>
+          )}
         </nav>
       </header>
 
@@ -37,18 +54,29 @@ export default function Home() {
             the table where all three sit down together.
           </p>
           <div className="mt-8 flex gap-3">
-            <Link
-              href="/register"
-              className="px-5 py-3 rounded-md bg-amber text-ink font-medium hover:bg-amber-soft transition-colors"
-            >
-              Create your account
-            </Link>
-            <Link
-              href="/login"
-              className="px-5 py-3 rounded-md border border-paper/30 hover:border-paper/60 transition-colors"
-            >
-              I already have one
-            </Link>
+            {user ? (
+              <Link
+                href="/dashboard"
+                className="px-5 py-3 rounded-md bg-amber text-ink font-medium hover:bg-amber-soft transition-colors"
+              >
+                Go to your dashboard
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/register"
+                  className="px-5 py-3 rounded-md bg-amber text-ink font-medium hover:bg-amber-soft transition-colors"
+                >
+                  Create your account
+                </Link>
+                <Link
+                  href="/login"
+                  className="px-5 py-3 rounded-md border border-paper/30 hover:border-paper/60 transition-colors"
+                >
+                  I already have one
+                </Link>
+              </>
+            )}
           </div>
         </div>
 

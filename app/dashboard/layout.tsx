@@ -26,9 +26,17 @@ export default async function DashboardLayout({
   return (
     <div className="min-h-screen">
       <header className="flex items-center justify-between px-6 py-4 border-b border-paper-dim">
-        <Link href="/dashboard" className="font-display text-lg italic">
-          FundBridge
-        </Link>
+        <div className="flex items-center gap-6">
+          <Link href="/dashboard" className="font-display text-lg italic">
+            FundBridge
+          </Link>
+          <Link
+            href="/"
+            className="text-sm text-slate hover:text-ink transition-colors hidden sm:inline"
+          >
+            About FundBridge
+          </Link>
+        </div>
         <div className="flex items-center gap-4">
           <div className="text-right leading-tight">
             <p className="text-sm font-medium">{profile?.full_name || user.email}</p>
