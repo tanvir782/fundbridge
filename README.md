@@ -122,3 +122,19 @@ supabase/schema.sql          run this once in the Supabase SQL editor
 
 Each of those is its own database table plus a page — happy to build
 any of them next.
+
+## What's real now (as of this update)
+
+- **Startup module** — founders create/edit a startup profile (name, tagline, description, stage, funding goal) at `/dashboard/founder/startup`
+- **Funding module** — investors get a starting virtual balance of $100,000, browse real startups, and invest through an atomic balance-check-and-deduct function (`invest_in_startup` in the database, no way to overspend even with rapid double-clicks); funding progress bars are computed live from real investment rows
+- **Bidding module** — founders post projects under their startup; bidders browse open projects and submit proposals; founders review bids and select a winner, which locks the project to "in progress" and marks the other bids "rejected"
+- **Admin panel** — real user list, and a verify/unverify toggle for each startup, both reading live from the database
+
+## Extra setup step for this update
+
+You need to run one more SQL file — `supabase/002_core_modules.sql` — the same way you ran `schema.sql`:
+
+1. Supabase dashboard → **SQL Editor → New query**
+2. Open `supabase/002_core_modules.sql`, copy all of it, paste, click **Run**
+
+This adds the `startups`, `investments`, `projects`, and `bids` tables, the virtual balance column on profiles, and the row-level security policies that keep each role's data scoped correctly (a bidder can only see their own bids, a founder can only edit their own startup, etc).
