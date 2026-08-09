@@ -138,3 +138,18 @@ You need to run one more SQL file — `supabase/002_core_modules.sql` — the sa
 2. Open `supabase/002_core_modules.sql`, copy all of it, paste, click **Run**
 
 This adds the `startups`, `investments`, `projects`, and `bids` tables, the virtual balance column on profiles, and the row-level security policies that keep each role's data scoped correctly (a bidder can only see their own bids, a founder can only edit their own startup, etc).
+
+## Second update: password recovery, notifications, reviews, profile
+
+- **Forgot password** — `/forgot-password` sends a reset email; `/reset-password` (the link's destination) lets them set a new one
+- **Notifications** — a bell icon in the dashboard header with an unread badge; database triggers fire automatically (no app code involved) when: a founder's project gets a new bid, a bidder's bid is accepted/rejected, or a founder's startup gets a new investment
+- **Reviews** — investors can leave a 1-5 star rating + comment on any startup they've actually invested in (enforced by a database rule, not just the UI); average rating shows on the startup's page
+- **Profile page** — click your name in the header to edit your display name and see your role/join date (and virtual balance, if you're an investor)
+
+## One more SQL file to run
+
+Same drill as before — run `supabase/003_notifications_reviews.sql` in the Supabase SQL Editor, after `schema.sql` and `002_core_modules.sql`. This adds the `notifications` and `reviews` tables plus three trigger functions that auto-generate notifications.
+
+## Supabase email setup for password reset (important)
+
+Password reset uses the same shared email sender as signup confirmation, so it has the same low rate limit. If you turned off "Confirm email" earlier to dodge that limit, password reset emails still go through that same limited sender — expect to hit the rate limit if you test it repeatedly in a short window. For your actual demo, either wait between tests or set up your own SMTP under **Authentication → Providers → Email → SMTP Settings** to remove the limit entirely.
